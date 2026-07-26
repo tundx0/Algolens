@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Keyed by a client-generated id today (see src/server/stub-user.ts). Once
+// Clerk is wired in, `id` becomes the Clerk user id — no schema change needed,
+// just a different id source at the call site.
+model User {
+  id        String              @id
+  createdAt DateTime            @default(now())
+  progress  AlgorithmProgress[]
+  exercises ExerciseProgress[]
+}
+
+enum ProgressStatus {
+  VIEWED
+  COMPLETED
+}
+
+model AlgorithmProgress {
+  id          String         @id @default(cuid())
+  userId      String
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  algorithmId String
+  status      ProgressStatus @default(VIEWED)
+  updatedAt   DateTime       @updatedAt
+
+  @@unique([userId, algorithmId])
+}
+
+enum ExerciseStatus {
+  ATTEMPTED
+  SOLVED
+}
+
+model ExerciseProgress {
+  id         String         @id @default(cuid())
+  userId     String
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exerciseId String
+  status     ExerciseStatus @default(ATTEMPTED)
+  /** last code the user ran for this problem, so they can pick up where they left off */
+  lastCode   String?
+  updatedAt  DateTime       @updatedAt
+
+  @@unique([userId, exerciseId])
+}

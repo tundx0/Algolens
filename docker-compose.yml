@@ -1,0 +1,22 @@
+name: algolens
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: algolens
+      POSTGRES_PASSWORD: algolens
+      POSTGRES_DB: algolens
+    ports:
+      - "5433:5432"
+    volumes:
+      - algolens_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U algolens"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  algolens_postgres:

@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark is the product default: dark tokens live on :root, light on .light. */
+:root {
+  --bg: #0b1029;
+  --bg-well: #070a1c;
+  --surface: #111737;
+  --surface-2: #171f47;
+  --edge: #202a58;
+  --edge-strong: #33407a;
+  --ink: #edf0fa;
+  --ink-2: #a6afd0;
+  --ink-3: #6b76a3;
+  --accent: #faf92a;
+  --accent-hover: #fcfa64;
+  --accent-ink: #0b1029;
+  --accent-text: #faf92a;
+
+  --viz-neutral: #33407a;
+  --viz-compare: #ffae1f;
+  --viz-swap: #ff5c68;
+  --viz-sorted: #2fd180;
+  --viz-visited: #4d7fff;
+  --viz-frontier: #22d3ee;
+  --viz-pivot: #a78bfa;
+  --viz-path-a: #faf92a;
+  --viz-path-b: #ffae1f;
+
+  color-scheme: dark;
+}
+
+:root.light {
+  --bg: #f5f6fb;
+  --bg-well: #eceef7;
+  --surface: #ffffff;
+  --surface-2: #edeff8;
+  --edge: #dadeee;
+  --edge-strong: #b9c0db;
+  --ink: #10163a;
+  --ink-2: #4a5480;
+  --ink-3: #7c86ad;
+  --accent: #faf92a;
+  --accent-hover: #fcfa64;
+  --accent-ink: #0b1029;
+  --accent-text: #877e0b;
+
+  --viz-neutral: #8b96bc;
+  --viz-compare: #de8900;
+  --viz-swap: #e23d49;
+  --viz-sorted: #0fa968;
+  --viz-visited: #2f5fe0;
+  --viz-frontier: #0899b4;
+  --viz-pivot: #7c5ce0;
+  --viz-path-a: #e8e00f;
+  --viz-path-b: #de8900;
+
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Bar fills: color is CSS's job (theme vars + ease-out transitions); position
+   is Framer Motion's (springs). */
+.viz-bar {
+  transition: fill 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.viz-bar-neutral { fill: var(--viz-neutral); }
+.viz-bar-compare { fill: var(--viz-compare); }
+.viz-bar-swap { fill: var(--viz-swap); }
+.viz-bar-sorted { fill: var(--viz-sorted); }
+.viz-bar-pivot { fill: var(--viz-pivot); }
+
+@media (prefers-reduced-motion: reduce) {
+  .viz-bar { transition: none; }
+}
+
+/* Landing page atmosphere: yellow glow from above + faint dot grid */
+.landing-atmosphere {
+  background:
+    radial-gradient(
+      ellipse 70% 45% at 50% -8%,
+      color-mix(in srgb, var(--accent) 9%, transparent),
+      transparent
+    ),
+    radial-gradient(var(--edge) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    30px 30px;
+}
+:root.light .landing-atmosphere {
+  background:
+    radial-gradient(
+      ellipse 70% 45% at 50% -8%,
+      color-mix(in srgb, var(--accent) 18%, transparent),
+      transparent
+    ),
+    radial-gradient(var(--edge) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    30px 30px;
+}
+
+/* Motion-grammar micro demos (landing) */
+@keyframes lg-lift {
+  0%, 15% { transform: translateY(0); background: var(--viz-neutral); }
+  35%, 65% { transform: translateY(-8px); background: var(--viz-compare); }
+  85%, 100% { transform: translateY(0); background: var(--viz-neutral); }
+}
+@keyframes lg-swap-a {
+  0%, 12% { transform: translate(0, 0); background: var(--viz-neutral); }
+  26% { transform: translate(19px, -20px); background: var(--viz-swap); }
+  40%, 60% { transform: translate(38px, 0); background: var(--viz-neutral); }
+  74% { transform: translate(19px, -20px); background: var(--viz-swap); }
+  88%, 100% { transform: translate(0, 0); background: var(--viz-neutral); }
+}
+@keyframes lg-swap-b {
+  0%, 12% { transform: translate(0, 0); background: var(--viz-neutral); }
+  26% { transform: translate(-19px, 20px); background: var(--viz-swap); }
+  40%, 60% { transform: translate(-38px, 0); background: var(--viz-neutral); }
+  74% { transform: translate(-19px, 20px); background: var(--viz-swap); }
+  88%, 100% { transform: translate(0, 0); background: var(--viz-neutral); }
+}
+@keyframes lg-settle {
+  0%, 12% { transform: translateY(-24px); background: var(--viz-neutral); opacity: 1; }
+  38% { transform: translateY(3px); }
+  50% { transform: translateY(-4px); background: var(--viz-sorted); }
+  60%, 82% { transform: translateY(0); background: var(--viz-sorted); opacity: 1; }
+  94% { opacity: 0.25; }
+  100% { transform: translateY(-24px); background: var(--viz-neutral); opacity: 1; }
+}
+@keyframes lg-visit {
+  0%, 8% { background: var(--surface-2); transform: scale(1); }
+  20% { background: var(--viz-frontier); transform: scale(1.3); }
+  34%, 70% { background: var(--viz-visited); transform: scale(1); }
+  86%, 100% { background: var(--surface-2); }
+}
+@keyframes lg-reject {
+  0%, 55% { transform: translateX(0); background: var(--viz-neutral); }
+  60% { background: var(--viz-swap); transform: translateX(-3px); }
+  65% { transform: translateX(3px); background: var(--viz-swap); }
+  70% { transform: translateX(-2px); background: var(--viz-swap); }
+  78%, 100% { transform: translateX(0); background: var(--viz-neutral); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-anim { animation: none !important; }
+}
+
+/* Monaco: active line synced to the playing step */
+.algolens-active-line {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-left: 2px solid var(--accent);
+}
+.algolens-active-glyph {
+  background: var(--accent);
+  width: 3px !important;
+  margin-left: 6px;
+  border-radius: 2px;
+}
+
+/* Scrubbing timeline */
+input[type="range"].timeline {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 26px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"].timeline::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-2);
+}
+input[type="range"].timeline::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg-well);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+input[type="range"].timeline::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-2);
+}
+input[type="range"].timeline::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg-well);
+  box-shadow: 0 0 0 1px var(--accent);
+}
