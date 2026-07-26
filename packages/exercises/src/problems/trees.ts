@@ -82,6 +82,20 @@ function invertTree(root) {
       { args: [[2, 1, 3]], expected: [2, 3, 1] },
       { args: [[]], expected: [] },
     ],
+    languages: {
+      python: {
+        functionName: "invert_tree",
+        starterCode: `# root is a node with .val, .left, .right (or None)
+def invert_tree(root):
+    # your code here
+    pass`,
+        solutionCode: `def invert_tree(root):
+    if root is None:
+        return None
+    root.left, root.right = invert_tree(root.right), invert_tree(root.left)
+    return root`,
+      },
+    },
   },
   {
     id: "validate-binary-search-tree",
@@ -118,5 +132,20 @@ function isValidBST(root) {
       { args: [[]], expected: true },
       { args: [[1]], expected: true },
     ],
+    languages: {
+      python: {
+        functionName: "is_valid_bst",
+        starterCode: `# root is a node with .val, .left, .right (or None)
+def is_valid_bst(root) -> bool:
+    # your code here
+    pass`,
+        solutionCode: `def is_valid_bst(root, lo=float("-inf"), hi=float("inf")) -> bool:
+    if root is None:
+        return True
+    if root.val <= lo or root.val >= hi:
+        return False
+    return is_valid_bst(root.left, lo, root.val) and is_valid_bst(root.right, root.val, hi)`,
+      },
+    },
   },
 ];

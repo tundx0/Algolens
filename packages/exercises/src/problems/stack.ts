@@ -102,5 +102,22 @@ function dailyTemperatures(temperatures) {
       { args: [[30, 40, 50, 60]], expected: [1, 1, 1, 0] },
       { args: [[30, 60, 90]], expected: [1, 1, 0] },
     ],
+    languages: {
+      python: {
+        functionName: "daily_temperatures",
+        starterCode: `def daily_temperatures(temperatures: list[int]) -> list[int]:
+    # your code here
+    pass`,
+        solutionCode: `def daily_temperatures(temperatures: list[int]) -> list[int]:
+    answer = [0] * len(temperatures)
+    stack = []
+    for i, t in enumerate(temperatures):
+        while stack and t > temperatures[stack[-1]]:
+            j = stack.pop()
+            answer[j] = i - j
+        stack.append(i)
+    return answer`,
+      },
+    },
   },
 ];

@@ -87,6 +87,19 @@ function rob(nums) {
       { args: [[]], expected: 0 },
       { args: [[5]], expected: 5 },
     ],
+    languages: {
+      python: {
+        functionName: "rob",
+        starterCode: `def rob(nums: list[int]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def rob(nums: list[int]) -> int:
+    take, skip = 0, 0
+    for money in nums:
+        take, skip = skip + money, max(take, skip)
+    return max(take, skip)`,
+      },
+    },
   },
   {
     id: "longest-increasing-subsequence",
@@ -123,5 +136,22 @@ function lengthOfLIS(nums) {
       { args: [[0, 1, 0, 3, 2, 3]], expected: 4 },
       { args: [[7, 7, 7, 7]], expected: 1 },
     ],
+    languages: {
+      python: {
+        functionName: "length_of_lis",
+        starterCode: `def length_of_lis(nums: list[int]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def length_of_lis(nums: list[int]) -> int:
+    if not nums:
+        return 0
+    dp = [1] * len(nums)
+    for i in range(1, len(nums)):
+        for j in range(i):
+            if nums[j] < nums[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    return max(dp)`,
+      },
+    },
   },
 ];

@@ -42,6 +42,23 @@ function mergeIntervals(intervals) {
       { args: [[[1, 4], [4, 5]]], expected: [[1, 5]] },
       { args: [[[1, 4], [0, 4]]], expected: [[0, 4]] },
     ],
+    languages: {
+      python: {
+        functionName: "merge_intervals",
+        starterCode: `def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:
+    # your code here
+    pass`,
+        solutionCode: `def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:
+    ordered = sorted(intervals, key=lambda iv: iv[0])
+    result = []
+    for start, end in ordered:
+        if result and start <= result[-1][1]:
+            result[-1][1] = max(result[-1][1], end)
+        else:
+            result.append([start, end])
+    return result`,
+      },
+    },
   },
   {
     id: "insert-interval",
@@ -94,5 +111,31 @@ function insertInterval(intervals, newInterval) {
       },
       { args: [[], [5, 7]], expected: [[5, 7]] },
     ],
+    languages: {
+      python: {
+        functionName: "insert_interval",
+        starterCode: `def insert_interval(intervals: list[list[int]], new_interval: list[int]) -> list[list[int]]:
+    # your code here
+    pass`,
+        solutionCode: `def insert_interval(intervals: list[list[int]], new_interval: list[int]) -> list[list[int]]:
+    result = []
+    start, end = new_interval
+    i = 0
+    n = len(intervals)
+
+    while i < n and intervals[i][1] < start:
+        result.append(intervals[i])
+        i += 1
+    while i < n and intervals[i][0] <= end:
+        start = min(start, intervals[i][0])
+        end = max(end, intervals[i][1])
+        i += 1
+    result.append([start, end])
+    while i < n:
+        result.append(intervals[i])
+        i += 1
+    return result`,
+      },
+    },
   },
 ];

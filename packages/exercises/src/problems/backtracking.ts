@@ -42,6 +42,26 @@ function subsets(nums) {
       },
       { args: [[0]], expected: [[], [0]], unordered: true },
     ],
+    languages: {
+      python: {
+        functionName: "subsets",
+        starterCode: `def subsets(nums: list[int]) -> list[list[int]]:
+    # your code here
+    pass`,
+        solutionCode: `def subsets(nums: list[int]) -> list[list[int]]:
+    result = []
+
+    def backtrack(start, path):
+        result.append(path[:])
+        for i in range(start, len(nums)):
+            path.append(nums[i])
+            backtrack(i + 1, path)
+            path.pop()
+
+    backtrack(0, [])
+    return result`,
+      },
+    },
   },
   {
     id: "permutations",
@@ -89,5 +109,27 @@ function permute(nums) {
       },
       { args: [[0, 1]], expected: [[0, 1], [1, 0]], unordered: true },
     ],
+    languages: {
+      python: {
+        functionName: "permute",
+        starterCode: `def permute(nums: list[int]) -> list[list[int]]:
+    # your code here
+    pass`,
+        solutionCode: `def permute(nums: list[int]) -> list[list[int]]:
+    result = []
+
+    def backtrack(path, remaining):
+        if not remaining:
+            result.append(path[:])
+            return
+        for i in range(len(remaining)):
+            path.append(remaining[i])
+            backtrack(path, remaining[:i] + remaining[i + 1:])
+            path.pop()
+
+    backtrack([], nums)
+    return result`,
+      },
+    },
   },
 ];

@@ -34,6 +34,18 @@ function findKthLargest(nums, k) {
       { args: [[3, 2, 3, 1, 2, 4, 5, 5, 6], 4], expected: 4 },
       { args: [[1], 1], expected: 1 },
     ],
+    languages: {
+      python: {
+        functionName: "find_kth_largest",
+        starterCode: `def find_kth_largest(nums: list[int], k: int) -> int:
+    # your code here
+    pass`,
+        solutionCode: `import heapq
+
+def find_kth_largest(nums: list[int], k: int) -> int:
+    return heapq.nlargest(k, nums)[-1]`,
+      },
+    },
   },
   {
     id: "last-stone-weight",
@@ -74,5 +86,24 @@ function lastStoneWeight(stones) {
       { args: [[1]], expected: 1 },
       { args: [[2, 2]], expected: 0 },
     ],
+    languages: {
+      python: {
+        functionName: "last_stone_weight",
+        starterCode: `def last_stone_weight(stones: list[int]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `import heapq
+
+def last_stone_weight(stones: list[int]) -> int:
+    heap = [-s for s in stones]
+    heapq.heapify(heap)
+    while len(heap) > 1:
+        a = -heapq.heappop(heap)
+        b = -heapq.heappop(heap)
+        if a != b:
+            heapq.heappush(heap, -(a - b))
+    return -heap[0] if heap else 0`,
+      },
+    },
   },
 ];

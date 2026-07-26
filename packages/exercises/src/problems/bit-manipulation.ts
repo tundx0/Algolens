@@ -79,6 +79,20 @@ function hammingWeight(n) {
       { args: [0], expected: 0 },
       { args: [4294967293], expected: 31 },
     ],
+    languages: {
+      python: {
+        functionName: "hamming_weight",
+        starterCode: `def hamming_weight(n: int) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def hamming_weight(n: int) -> int:
+    count = 0
+    while n != 0:
+        count += n & 1
+        n >>= 1
+    return count`,
+      },
+    },
   },
   {
     id: "counting-bits",
@@ -114,5 +128,18 @@ function countBits(n) {
       { args: [5], expected: [0, 1, 1, 2, 1, 2] },
       { args: [0], expected: [0] },
     ],
+    languages: {
+      python: {
+        functionName: "count_bits",
+        starterCode: `def count_bits(n: int) -> list[int]:
+    # your code here
+    pass`,
+        solutionCode: `def count_bits(n: int) -> list[int]:
+    ans = [0] * (n + 1)
+    for i in range(1, n + 1):
+        ans[i] = ans[i >> 1] + (i & 1)
+    return ans`,
+      },
+    },
   },
 ];

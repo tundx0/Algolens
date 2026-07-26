@@ -92,6 +92,25 @@ function twoSumSorted(numbers, target) {
       { args: [[2, 3, 4], 6], expected: [1, 3] },
       { args: [[-1, 0], -1], expected: [1, 2] },
     ],
+    languages: {
+      python: {
+        functionName: "two_sum_sorted",
+        starterCode: `def two_sum_sorted(numbers: list[int], target: int) -> list[int]:
+    # your code here
+    pass`,
+        solutionCode: `def two_sum_sorted(numbers: list[int], target: int) -> list[int]:
+    lo, hi = 0, len(numbers) - 1
+    while lo < hi:
+        total = numbers[lo] + numbers[hi]
+        if total == target:
+            return [lo + 1, hi + 1]
+        if total < target:
+            lo += 1
+        else:
+            hi -= 1
+    return []`,
+      },
+    },
   },
   {
     id: "container-with-most-water",
@@ -128,5 +147,24 @@ function maxArea(height) {
       { args: [[1, 1]], expected: 1 },
       { args: [[4, 3, 2, 1, 4]], expected: 16 },
     ],
+    languages: {
+      python: {
+        functionName: "max_area",
+        starterCode: `def max_area(height: list[int]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def max_area(height: list[int]) -> int:
+    lo, hi = 0, len(height) - 1
+    best = 0
+    while lo < hi:
+        area = min(height[lo], height[hi]) * (hi - lo)
+        best = max(best, area)
+        if height[lo] < height[hi]:
+            lo += 1
+        else:
+            hi -= 1
+    return best`,
+      },
+    },
   },
 ];

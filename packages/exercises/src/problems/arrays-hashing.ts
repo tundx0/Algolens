@@ -140,6 +140,20 @@ function groupAnagrams(strs) {
       { args: [[""]], expected: [[""]], unordered: true },
       { args: [["a"]], expected: [["a"]], unordered: true },
     ],
+    languages: {
+      python: {
+        functionName: "group_anagrams",
+        starterCode: `def group_anagrams(strs: list[str]) -> list[list[str]]:
+    # your code here
+    pass`,
+        solutionCode: `def group_anagrams(strs: list[str]) -> list[list[str]]:
+    groups = {}
+    for s in strs:
+        key = "".join(sorted(s))
+        groups.setdefault(key, []).append(s)
+    return list(groups.values())`,
+      },
+    },
   },
   {
     id: "top-k-frequent-elements",
@@ -175,5 +189,18 @@ function topKFrequent(nums, k) {
       { args: [[1], 1], expected: [1] },
       { args: [[4, 1, 1, 1, 2, 2, 3], 2], expected: [1, 2], unordered: true },
     ],
+    languages: {
+      python: {
+        functionName: "top_k_frequent",
+        starterCode: `def top_k_frequent(nums: list[int], k: int) -> list[int]:
+    # your code here
+    pass`,
+        solutionCode: `def top_k_frequent(nums: list[int], k: int) -> list[int]:
+    counts = {}
+    for n in nums:
+        counts[n] = counts.get(n, 0) + 1
+    return [n for n, _ in sorted(counts.items(), key=lambda kv: -kv[1])[:k]]`,
+      },
+    },
   },
 ];

@@ -89,5 +89,20 @@ function canJump(nums) {
       { args: [[0]], expected: true },
       { args: [[1, 0, 1, 0]], expected: false },
     ],
+    languages: {
+      python: {
+        functionName: "can_jump",
+        starterCode: `def can_jump(nums: list[int]) -> bool:
+    # your code here
+    pass`,
+        solutionCode: `def can_jump(nums: list[int]) -> bool:
+    reach = 0
+    for i, n in enumerate(nums):
+        if i > reach:
+            return False
+        reach = max(reach, i + n)
+    return True`,
+      },
+    },
   },
 ];

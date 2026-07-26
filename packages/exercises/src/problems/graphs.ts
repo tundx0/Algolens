@@ -66,6 +66,37 @@ function numIslands(grid) {
       { args: [[[0, 0], [0, 0]]], expected: 0 },
       { args: [[[1, 1, 1]]], expected: 1 },
     ],
+    languages: {
+      python: {
+        functionName: "num_islands",
+        starterCode: `def num_islands(grid: list[list[int]]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def num_islands(grid: list[list[int]]) -> int:
+    rows = len(grid)
+    cols = len(grid[0]) if rows else 0
+    seen = [[False] * cols for _ in range(rows)]
+
+    def flood(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols:
+            return
+        if seen[r][c] or grid[r][c] == 0:
+            return
+        seen[r][c] = True
+        flood(r + 1, c)
+        flood(r - 1, c)
+        flood(r, c + 1)
+        flood(r, c - 1)
+
+    count = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1 and not seen[r][c]:
+                count += 1
+                flood(r, c)
+    return count`,
+      },
+    },
   },
   {
     id: "course-schedule",
@@ -120,5 +151,34 @@ function canFinish(numCourses, prerequisites) {
       { args: [1, []], expected: true },
       { args: [4, [[1, 0], [2, 0], [3, 1], [3, 2]]], expected: true },
     ],
+    languages: {
+      python: {
+        functionName: "can_finish",
+        starterCode: `def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
+    # your code here
+    pass`,
+        solutionCode: `def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
+    graph = [[] for _ in range(num_courses)]
+    for a, b in prerequisites:
+        graph[a].append(b)
+
+    UNVISITED, VISITING, DONE = 0, 1, 2
+    state = [UNVISITED] * num_courses
+
+    def has_cycle(node):
+        if state[node] == VISITING:
+            return True
+        if state[node] == DONE:
+            return False
+        state[node] = VISITING
+        for nxt in graph[node]:
+            if has_cycle(nxt):
+                return True
+        state[node] = DONE
+        return False
+
+    return not any(has_cycle(course) for course in range(num_courses))`,
+      },
+    },
   },
 ];
