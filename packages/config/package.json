@@ -1,0 +1,14 @@
+{
+  "name": "@algolens/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig/*": "./tsconfig/*",
+    "./tailwind/preset": "./tailwind/preset.ts",
+    "./eslint/base": "./eslint/base.mjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
