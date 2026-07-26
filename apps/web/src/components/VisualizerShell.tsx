@@ -1,7 +1,9 @@
 "use client";
 
 import { algorithms, getAlgorithm, type GridInput } from "@algolens/algorithms";
+import { exercises } from "@algolens/exercises";
 import { Badge, Button } from "@algolens/ui";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePlayer } from "@/hooks/usePlayer";
@@ -105,6 +107,7 @@ export function VisualizerShell() {
 
   const state = snap.step.state;
   const completed = snap.step.metadata?.event === "complete";
+  const relatedExercise = exercises.find((e) => e.relatedAlgorithmId === algo.id);
 
   return (
     <div className="grid min-h-dvh grid-cols-[240px_minmax(0,1fr)]">
@@ -150,6 +153,15 @@ export function VisualizerShell() {
             )}
           </div>
         </header>
+
+        {relatedExercise && (
+          <Link
+            href={`/practice/${relatedExercise.id}`}
+            className="-mt-2 flex items-center gap-2 self-start text-[12.5px] font-semibold text-accent-text hover:underline"
+          >
+            Practice this: {relatedExercise.title} →
+          </Link>
+        )}
 
         {state.kind === "array" && (
           <VisualizationStage

@@ -1,33 +1,38 @@
 import Link from "next/link";
+import { algorithms } from "@algolens/algorithms";
+import { exercises } from "@algolens/exercises";
 import { LiveSort } from "@/components/landing/LiveSort";
 import { MotionGrammarCards } from "@/components/landing/MotionGrammarCards";
 import { Reveal } from "@/components/landing/Reveal";
+import { SiteNav } from "@/components/SiteNav";
 
-const categories = [
-  { name: "Sorting", detail: "6 algorithms", live: true },
-  { name: "Searching", detail: "Phase 2" },
-  { name: "Graphs & pathfinding", detail: "Phase 2" },
-  { name: "Trees", detail: "Phase 2" },
-  { name: "Dynamic programming", detail: "Phase 2" },
-  { name: "Linked lists", detail: "Planned" },
-  { name: "Stacks & queues", detail: "Planned" },
-  { name: "Hashing", detail: "Planned" },
-];
+const categoryLabels: Record<string, string> = {
+  sorting: "Sorting",
+  searching: "Searching",
+  graph: "Graphs & pathfinding",
+  tree: "Trees",
+  dp: "Dynamic programming",
+};
+
+function countByCategory() {
+  const counts = new Map<string, number>();
+  for (const algo of algorithms) {
+    counts.set(algo.category, (counts.get(algo.category) ?? 0) + 1);
+  }
+  return [...counts.entries()].map(([category, count]) => ({
+    name: categoryLabels[category] ?? category,
+    detail: `${count} algorithm${count === 1 ? "" : "s"}`,
+  }));
+}
+
+const categories = countByCategory();
+const practiceCount = exercises.length;
+const pythonCount = exercises.filter((e) => e.languages?.python).length;
 
 export default function LandingPage() {
   return (
     <div className="landing-atmosphere min-h-dvh">
-      <nav className="mx-auto flex max-w-[1120px] items-center justify-between px-6 py-6">
-        <span className="font-display text-[20px] font-bold tracking-tight">
-          Algo<span className="text-accent-text">Lens</span>
-        </span>
-        <Link
-          href="/visualize"
-          className="rounded-sm border border-edge-strong px-4 py-2 text-[13px] font-semibold text-ink transition-colors duration-[120ms] hover:border-ink-3 hover:bg-surface-2"
-        >
-          Open the visualizer
-        </Link>
-      </nav>
+      <SiteNav />
 
       {/* Hero */}
       <header className="mx-auto max-w-[1120px] px-6 pb-4 pt-16 text-center">
@@ -152,34 +157,66 @@ export const yourAlgorithm = {
           <h2 className="font-display text-[34px] font-bold tracking-tight">
             The curriculum
           </h2>
+          <p className="mt-3 max-w-[58ch] text-[15px] leading-relaxed text-ink-2">
+            {algorithms.length} algorithms, all live, all watchable end to
+            end.
+          </p>
         </Reveal>
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {categories.map((category, i) => (
             <Reveal key={category.name} delay={i * 0.04}>
-              {category.live ? (
-                <Link
-                  href="/visualize"
-                  className="block rounded-md border border-accent/50 bg-accent/5 p-5 transition-transform duration-200 hover:-translate-y-0.5"
-                >
-                  <div className="text-[14.5px] font-semibold text-ink">
-                    {category.name}
-                  </div>
-                  <div className="mt-1 font-mono text-[11px] text-accent-text">
-                    live now → {category.detail}
-                  </div>
-                </Link>
-              ) : (
-                <div className="rounded-md border border-edge bg-surface p-5">
-                  <div className="text-[14.5px] font-semibold text-ink-2">
-                    {category.name}
-                  </div>
-                  <div className="mt-1 font-mono text-[11px] text-ink-3">
-                    {category.detail}
-                  </div>
+              <Link
+                href="/visualize"
+                className="block rounded-md border border-accent/50 bg-accent/5 p-5 transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                <div className="text-[14.5px] font-semibold text-ink">
+                  {category.name}
                 </div>
-              )}
+                <div className="mt-1 font-mono text-[11px] text-accent-text">
+                  live now → {category.detail}
+                </div>
+              </Link>
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      {/* Practice */}
+      <section className="mx-auto max-w-[1120px] px-6 pt-28">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <Reveal>
+            <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-text">
+              Practice
+            </div>
+            <h2 className="font-display text-[34px] font-bold tracking-tight">
+              Watch the idea.
+              <br />
+              Then write the code.
+            </h2>
+            <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-ink-2">
+              {practiceCount} original interview problems across the classic
+              patterns — arrays, graphs, trees, DP, and more. Write real
+              JavaScript{pythonCount > 0 && " or Python"}, graded instantly:
+              JS runs in your browser, Python runs in an isolated sandbox with
+              no network access. Nothing leaves your machine either way.
+            </p>
+            <Link
+              href="/practice"
+              className="mt-7 inline-block rounded-sm bg-accent px-6 py-3 text-[14.5px] font-semibold text-accent-ink transition-[background,transform] duration-[120ms] hover:bg-accent-hover active:scale-[0.97]"
+            >
+              Start practicing
+            </Link>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <pre className="overflow-x-auto rounded-md border border-edge bg-well p-6 font-mono text-[12.5px] leading-[1.75] text-ink-2">
+              <code>{`✓ two_sum([2,7,11,15], 9)
+✓ two_sum([3,2,4], 6)
+✓ two_sum([3,3], 6)
+✓ two_sum([-1,-2,-3,-4,-5], -8)
+
+All 4 tests passed`}</code>
+            </pre>
+          </Reveal>
         </div>
       </section>
 
@@ -190,12 +227,20 @@ export const yourAlgorithm = {
             <h2 className="max-w-[22ch] font-display text-[30px] font-bold leading-tight tracking-tight">
               Stop reading pseudocode. Watch it run.
             </h2>
-            <Link
-              href="/visualize"
-              className="rounded-sm bg-accent px-6 py-3 text-[14.5px] font-semibold text-accent-ink transition-[background,transform] duration-[120ms] hover:bg-accent-hover active:scale-[0.97]"
-            >
-              Open the visualizer
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/visualize"
+                className="rounded-sm bg-accent px-6 py-3 text-[14.5px] font-semibold text-accent-ink transition-[background,transform] duration-[120ms] hover:bg-accent-hover active:scale-[0.97]"
+              >
+                Open the visualizer
+              </Link>
+              <Link
+                href="/learn"
+                className="rounded-sm border border-edge-strong px-6 py-3 text-[14.5px] font-semibold text-ink transition-colors duration-[120ms] hover:border-ink-3 hover:bg-surface-2"
+              >
+                See the learning path
+              </Link>
+            </div>
           </div>
           <p className="pt-10 text-center font-mono text-[11px] text-ink-3">
             AlgoLens · dark-first · keyboard-first · every animation encodes
