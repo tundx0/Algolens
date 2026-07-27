@@ -20,6 +20,9 @@ importers:
       '@algolens/exercises':
         specifier: workspace:*
         version: link:../../packages/exercises
+      '@algolens/pathways':
+        specifier: workspace:*
+        version: link:../../packages/pathways
       '@algolens/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -111,6 +114,15 @@ importers:
         version: 3.4.19
 
   packages/exercises:
+    devDependencies:
+      '@algolens/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+
+  packages/pathways:
     devDependencies:
       '@algolens/config':
         specifier: workspace:*

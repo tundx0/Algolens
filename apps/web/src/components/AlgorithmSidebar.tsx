@@ -90,6 +90,12 @@ export function AlgorithmSidebar({
         >
           Practice problems →
         </Link>
+        <Link
+          href="/pathways"
+          className="text-[11px] font-semibold text-ink-3 hover:text-ink"
+        >
+          Pathways →
+        </Link>
       </div>
     </aside>
   );

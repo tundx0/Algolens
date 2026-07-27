@@ -15,6 +15,7 @@ model User {
   createdAt DateTime            @default(now())
   progress  AlgorithmProgress[]
   exercises ExerciseProgress[]
+  pathways  PathwayProgress[]
 }
 
 enum ProgressStatus {
@@ -49,4 +50,18 @@ model ExerciseProgress {
   updatedAt  DateTime       @updatedAt
 
   @@unique([userId, exerciseId])
+}
+
+// Manual completion for pathway steps (projects/readings). Steps that link
+// to an algorithm or exercise derive completion from the tables above
+// instead — a row here means "this step is done".
+model PathwayProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pathwayId String
+  stepId    String
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, pathwayId, stepId])
 }

@@ -5,6 +5,7 @@ const nextConfig = {
     "@algolens/viz-engine",
     "@algolens/algorithms",
     "@algolens/exercises",
+    "@algolens/pathways",
   ],
 };
 

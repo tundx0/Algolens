@@ -11,6 +11,7 @@
   "dependencies": {
     "@algolens/algorithms": "workspace:*",
     "@algolens/exercises": "workspace:*",
+    "@algolens/pathways": "workspace:*",
     "@algolens/ui": "workspace:*",
     "@algolens/viz-engine": "workspace:*",
     "@monaco-editor/react": "^4.7.0",

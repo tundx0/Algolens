@@ -4,6 +4,7 @@ import { exercises } from "@algolens/exercises";
 import { LiveSort } from "@/components/landing/LiveSort";
 import { MotionGrammarCards } from "@/components/landing/MotionGrammarCards";
 import { Reveal } from "@/components/landing/Reveal";
+import { SamuraiHero } from "@/components/pathways/SamuraiHero";
 import { SiteNav } from "@/components/SiteNav";
 
 const categoryLabels: Record<string, string> = {
@@ -218,6 +219,36 @@ All 4 tests passed`}</code>
             </pre>
           </Reveal>
         </div>
+      </section>
+
+      {/* Pathways */}
+      <section className="mx-auto max-w-[1120px] px-6 pt-28">
+        <Reveal>
+          <div className="overflow-hidden rounded-lg border border-edge">
+            <div className="h-[280px]">
+              <SamuraiHero />
+            </div>
+            <div className="bg-surface px-8 py-10 text-center">
+              <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-text">
+                道 · the way
+              </div>
+              <h2 className="mx-auto max-w-[22ch] font-display text-[28px] font-bold leading-tight tracking-tight">
+                Project-based pathways, built on 守破離
+              </h2>
+              <p className="mx-auto mt-3 max-w-[54ch] text-[14px] leading-relaxed text-ink-2">
+                No tutorials to copy — only project briefs to fulfill, staged
+                Shu-Ha-Ri: follow the form, break it, then leave it behind.
+                First path: Backend Engineering.
+              </p>
+              <Link
+                href="/pathways"
+                className="mt-6 inline-block rounded-sm bg-accent px-6 py-3 text-[14.5px] font-semibold text-accent-ink transition-[background,transform] duration-[120ms] hover:bg-accent-hover active:scale-[0.97]"
+              >
+                Begin the walk
+              </Link>
+            </div>
+          </div>
+        </Reveal>
       </section>
 
       {/* Footer CTA */}
