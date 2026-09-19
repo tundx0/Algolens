@@ -20,6 +20,7 @@ const categoryLabels: Record<ExerciseCategory, string> = {
   intervals: "Intervals",
   heap: "Heap",
   "bit-manipulation": "Bit Manipulation",
+  matrix: "Matrix",
 };
 
 const difficultyVariant = {

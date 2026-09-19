@@ -14,7 +14,8 @@ export type ExerciseCategory =
   | "greedy"
   | "intervals"
   | "heap"
-  | "bit-manipulation";
+  | "bit-manipulation"
+  | "matrix";
 
 export interface TestCase {
   /** positional arguments passed to the user's function */

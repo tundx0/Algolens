@@ -203,4 +203,189 @@ function topKFrequent(nums, k) {
       },
     },
   },
+  {
+    id: "valid-anagram",
+    title: "Valid Anagram",
+    category: "arrays-hashing",
+    difficulty: "easy",
+    prompt: `Given two strings \`s\` and \`t\`, return \`true\` if \`t\` is an anagram of \`s\` — the same letters, the same number of times, in any order.
+
+**Example**
+\`\`\`
+Input: s = "anagram", t = "nagaram"
+Output: true
+
+Input: s = "rat", t = "car"
+Output: false
+\`\`\``,
+    functionName: "isAnagram",
+    starterCode: `/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+function isAnagram(s, t) {
+  // your code here
+}`,
+    solutionCode: `function isAnagram(s, t) {
+  if (s.length !== t.length) return false;
+  const counts = {};
+  for (const c of s) counts[c] = (counts[c] ?? 0) + 1;
+  for (const c of t) {
+    if (!counts[c]) return false;
+    counts[c]--;
+  }
+  return true;
+}`,
+    testCases: [
+      { args: ["anagram", "nagaram"], expected: true },
+      { args: ["rat", "car"], expected: false },
+      { args: ["", ""], expected: true },
+      { args: ["a", "ab"], expected: false },
+    ],
+    languages: {
+      python: {
+        functionName: "is_anagram",
+        starterCode: `def is_anagram(s: str, t: str) -> bool:
+    # your code here
+    pass`,
+        solutionCode: `def is_anagram(s: str, t: str) -> bool:
+    if len(s) != len(t):
+        return False
+    counts = {}
+    for c in s:
+        counts[c] = counts.get(c, 0) + 1
+    for c in t:
+        if counts.get(c, 0) == 0:
+            return False
+        counts[c] -= 1
+    return True`,
+      },
+    },
+  },
+  {
+    id: "product-of-array-except-self",
+    title: "Product of Array Except Self",
+    category: "arrays-hashing",
+    difficulty: "medium",
+    prompt: `Given an integer array \`nums\`, return an array \`answer\` where \`answer[i]\` is the product of every element in \`nums\` except \`nums[i]\`.
+
+Do it in O(n) time without using division, and without the division operator anywhere in your solution.
+
+**Example**
+\`\`\`
+Input: nums = [1, 2, 3, 4]
+Output: [24, 12, 8, 6]
+\`\`\``,
+    functionName: "productExceptSelf",
+    starterCode: `/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+function productExceptSelf(nums) {
+  // your code here
+}`,
+    solutionCode: `function productExceptSelf(nums) {
+  const n = nums.length;
+  const result = new Array(n).fill(1);
+  let prefix = 1;
+  for (let i = 0; i < n; i++) {
+    result[i] = prefix;
+    prefix *= nums[i];
+  }
+  let suffix = 1;
+  for (let i = n - 1; i >= 0; i--) {
+    result[i] *= suffix;
+    suffix *= nums[i];
+  }
+  return result;
+}`,
+    testCases: [
+      { args: [[1, 2, 3, 4]], expected: [24, 12, 8, 6] },
+      { args: [[-1, 1, 0, -3, 3]], expected: [0, 0, 9, 0, 0] },
+      { args: [[2, 3]], expected: [3, 2] },
+    ],
+    languages: {
+      python: {
+        functionName: "product_except_self",
+        starterCode: `def product_except_self(nums: list[int]) -> list[int]:
+    # your code here
+    pass`,
+        solutionCode: `def product_except_self(nums: list[int]) -> list[int]:
+    n = len(nums)
+    result = [1] * n
+    prefix = 1
+    for i in range(n):
+        result[i] = prefix
+        prefix *= nums[i]
+    suffix = 1
+    for i in range(n - 1, -1, -1):
+        result[i] *= suffix
+        suffix *= nums[i]
+    return result`,
+      },
+    },
+  },
+  {
+    id: "longest-consecutive-sequence",
+    title: "Longest Consecutive Sequence",
+    category: "arrays-hashing",
+    difficulty: "medium",
+    prompt: `Given an unsorted array of integers \`nums\`, return the length of the longest run of consecutive integers it contains (the numbers don't need to be adjacent in the array, just present in it). Do it in O(n) time.
+
+**Example**
+\`\`\`
+Input: nums = [100, 4, 200, 1, 3, 2]
+Output: 4        // the run 1, 2, 3, 4
+\`\`\``,
+    functionName: "longestConsecutive",
+    starterCode: `/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+function longestConsecutive(nums) {
+  // your code here
+}`,
+    solutionCode: `function longestConsecutive(nums) {
+  const set = new Set(nums);
+  let best = 0;
+  for (const n of set) {
+    if (!set.has(n - 1)) {
+      let length = 1;
+      let current = n;
+      while (set.has(current + 1)) {
+        current++;
+        length++;
+      }
+      best = Math.max(best, length);
+    }
+  }
+  return best;
+}`,
+    testCases: [
+      { args: [[100, 4, 200, 1, 3, 2]], expected: 4 },
+      { args: [[]], expected: 0 },
+      { args: [[1, 2, 0, 1]], expected: 3 },
+    ],
+    languages: {
+      python: {
+        functionName: "longest_consecutive",
+        starterCode: `def longest_consecutive(nums: list[int]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def longest_consecutive(nums: list[int]) -> int:
+    num_set = set(nums)
+    best = 0
+    for n in num_set:
+        if n - 1 not in num_set:
+            length = 1
+            current = n
+            while current + 1 in num_set:
+                current += 1
+                length += 1
+            best = max(best, length)
+    return best`,
+      },
+    },
+  },
 ];

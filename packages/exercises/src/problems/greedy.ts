@@ -105,4 +105,63 @@ function canJump(nums) {
       },
     },
   },
+  {
+    id: "gas-station",
+    title: "Gas Station",
+    category: "greedy",
+    difficulty: "medium",
+    prompt: `There are \`n\` gas stations in a circle. \`gas[i]\` is the fuel available at station \`i\`, and \`cost[i]\` is the fuel needed to drive from station \`i\` to station \`i + 1\`. Starting with an empty tank at some station, return the index you must start from to complete the full circuit, or \`-1\` if it's impossible. If a solution exists, it's guaranteed unique.
+
+If the tank ever goes negative starting from some station, no station between the last valid start and here could have worked either — so jump the candidate start straight past the failure point.
+
+**Example**
+\`\`\`
+Input: gas = [1, 2, 3, 4, 5], cost = [3, 4, 5, 1, 2]
+Output: 3
+\`\`\``,
+    functionName: "canCompleteCircuit",
+    starterCode: `/**
+ * @param {number[]} gas
+ * @param {number[]} cost
+ * @return {number}
+ */
+function canCompleteCircuit(gas, cost) {
+  // your code here
+}`,
+    solutionCode: `function canCompleteCircuit(gas, cost) {
+  let total = 0, tank = 0, start = 0;
+  for (let i = 0; i < gas.length; i++) {
+    const diff = gas[i] - cost[i];
+    total += diff;
+    tank += diff;
+    if (tank < 0) {
+      start = i + 1;
+      tank = 0;
+    }
+  }
+  return total >= 0 ? start : -1;
+}`,
+    testCases: [
+      { args: [[1, 2, 3, 4, 5], [3, 4, 5, 1, 2]], expected: 3 },
+      { args: [[2, 3, 4], [3, 4, 3]], expected: -1 },
+    ],
+    languages: {
+      python: {
+        functionName: "can_complete_circuit",
+        starterCode: `def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
+    total = tank = start = 0
+    for i in range(len(gas)):
+        diff = gas[i] - cost[i]
+        total += diff
+        tank += diff
+        if tank < 0:
+            start = i + 1
+            tank = 0
+    return start if total >= 0 else -1`,
+      },
+    },
+  },
 ];

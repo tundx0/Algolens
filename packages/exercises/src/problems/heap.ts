@@ -106,4 +106,52 @@ def last_stone_weight(stones: list[int]) -> int:
       },
     },
   },
+  {
+    id: "k-closest-points-to-origin",
+    title: "K Closest Points to Origin",
+    category: "heap",
+    difficulty: "medium",
+    prompt: `Given an array of \`points\` where \`points[i] = [x, y]\`, return the \`k\` points closest to the origin \`(0, 0)\`, in any order. Distance is the usual Euclidean distance — comparing squared distances avoids the square root entirely.
+
+Same "always grab the smallest/biggest remaining" shape as [Kth Largest Element](/practice/kth-largest-element), scored by distance instead of value.
+
+**Example**
+\`\`\`
+Input: points = [[1, 3], [-2, 2]], k = 1
+Output: [[-2, 2]]        // dist² 8 < dist² 10
+\`\`\``,
+    functionName: "kClosest",
+    relatedAlgorithmId: "heap-sort",
+    starterCode: `/**
+ * @param {number[][]} points
+ * @param {number} k
+ * @return {number[][]}
+ */
+function kClosest(points, k) {
+  // your code here
+}`,
+    solutionCode: `function kClosest(points, k) {
+  return [...points]
+    .sort((a, b) => (a[0] ** 2 + a[1] ** 2) - (b[0] ** 2 + b[1] ** 2))
+    .slice(0, k);
+}`,
+    testCases: [
+      { args: [[[1, 3], [-2, 2]], 1], expected: [[-2, 2]], unordered: true },
+      {
+        args: [[[3, 3], [5, -1], [-2, 4]], 2],
+        expected: [[3, 3], [-2, 4]],
+        unordered: true,
+      },
+    ],
+    languages: {
+      python: {
+        functionName: "k_closest",
+        starterCode: `def k_closest(points: list[list[int]], k: int) -> list[list[int]]:
+    # your code here
+    pass`,
+        solutionCode: `def k_closest(points: list[list[int]], k: int) -> list[list[int]]:
+    return sorted(points, key=lambda p: p[0] ** 2 + p[1] ** 2)[:k]`,
+      },
+    },
+  },
 ];

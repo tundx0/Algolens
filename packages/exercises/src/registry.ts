@@ -9,6 +9,7 @@ import { greedy } from "./problems/greedy";
 import { heap } from "./problems/heap";
 import { intervals } from "./problems/intervals";
 import { linkedList } from "./problems/linked-list";
+import { matrix } from "./problems/matrix";
 import { slidingWindow } from "./problems/sliding-window";
 import { stack } from "./problems/stack";
 import { trees } from "./problems/trees";
@@ -33,6 +34,7 @@ export const exercises: readonly ExerciseDefinition[] = [
   ...intervals,
   ...heap,
   ...bitManipulation,
+  ...matrix,
 ];
 
 export function getExercise(id: string): ExerciseDefinition | undefined {

@@ -108,7 +108,7 @@ export function PracticeProblem({ id }: { id: string }) {
 
   return (
     <div className="mx-auto grid max-w-[1100px] grid-cols-1 gap-8 px-8 py-10 lg:grid-cols-[1fr_1.1fr]">
-      <div>
+      <div className="min-w-0">
         <Link
           href="/practice"
           className="text-[12px] font-semibold text-ink-3 hover:text-ink"
@@ -143,7 +143,7 @@ export function PracticeProblem({ id }: { id: string }) {
               pre: (props) => (
                 <pre
                   {...props}
-                  className="overflow-x-auto rounded-md border border-edge bg-well p-4 font-mono text-[12.5px] leading-relaxed"
+                  className="whitespace-pre-wrap break-words rounded-md border border-edge bg-well p-4 font-mono text-[12.5px] leading-relaxed"
                 />
               ),
               p: (props) => <p {...props} className="mb-3" />,
@@ -154,7 +154,7 @@ export function PracticeProblem({ id }: { id: string }) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex min-w-0 flex-col gap-3">
         <div className="flex items-center gap-1">
           <button
             onClick={() => switchLanguage("javascript")}

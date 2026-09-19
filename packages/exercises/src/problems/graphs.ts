@@ -181,4 +181,159 @@ function canFinish(numCourses, prerequisites) {
       },
     },
   },
+  {
+    id: "flood-fill",
+    title: "Flood Fill",
+    category: "graphs",
+    difficulty: "easy",
+    prompt: `You're given an image as a 2D grid \`image\`, a starting pixel \`(sr, sc)\`, and a \`color\`. Perform a flood fill: starting from \`(sr, sc)\`, recolor every pixel connected to it (horizontally or vertically) that shares the starting pixel's original color. Return the modified image.
+
+The literal "paint bucket" version of the same connected-region walk behind [DFS](/visualize?algo=dfs).
+
+**Example**
+\`\`\`
+Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2
+Output: [[2,2,2],[2,2,0],[2,0,1]]
+\`\`\``,
+    functionName: "floodFill",
+    relatedAlgorithmId: "dfs",
+    starterCode: `/**
+ * @param {number[][]} image
+ * @param {number} sr
+ * @param {number} sc
+ * @param {number} color
+ * @return {number[][]}
+ */
+function floodFill(image, sr, sc, color) {
+  // your code here
+}`,
+    solutionCode: `function floodFill(image, sr, sc, color) {
+  const rows = image.length, cols = image[0]?.length ?? 0;
+  const startColor = image[sr][sc];
+  if (startColor === color) return image;
+
+  function fill(r, c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return;
+    if (image[r][c] !== startColor) return;
+    image[r][c] = color;
+    fill(r + 1, c); fill(r - 1, c); fill(r, c + 1); fill(r, c - 1);
+  }
+
+  fill(sr, sc);
+  return image;
+}`,
+    testCases: [
+      {
+        args: [[[1, 1, 1], [1, 1, 0], [1, 0, 1]], 1, 1, 2],
+        expected: [[2, 2, 2], [2, 2, 0], [2, 0, 1]],
+      },
+      {
+        args: [[[0, 0, 0], [0, 0, 0]], 0, 0, 0],
+        expected: [[0, 0, 0], [0, 0, 0]],
+      },
+    ],
+    languages: {
+      python: {
+        functionName: "flood_fill",
+        starterCode: `def flood_fill(image: list[list[int]], sr: int, sc: int, color: int) -> list[list[int]]:
+    # your code here
+    pass`,
+        solutionCode: `def flood_fill(image: list[list[int]], sr: int, sc: int, color: int) -> list[list[int]]:
+    rows = len(image)
+    cols = len(image[0]) if rows else 0
+    start_color = image[sr][sc]
+    if start_color == color:
+        return image
+
+    def fill(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols:
+            return
+        if image[r][c] != start_color:
+            return
+        image[r][c] = color
+        fill(r + 1, c)
+        fill(r - 1, c)
+        fill(r, c + 1)
+        fill(r, c - 1)
+
+    fill(sr, sc)
+    return image`,
+      },
+    },
+  },
+  {
+    id: "max-area-of-island",
+    title: "Max Area of Island",
+    category: "graphs",
+    difficulty: "medium",
+    prompt: `You're given a 2D grid of \`1\`s (land) and \`0\`s (water), where an island is a group of \`1\`s connected horizontally or vertically. Return the area (cell count) of the largest island, or \`0\` if there is none.
+
+Same flood-fill walk as [Number of Islands](/practice/number-of-islands), except now you count cells per island instead of just counting islands.
+
+**Example**
+\`\`\`
+Input: grid = [[1,1,0],[0,1,0],[0,0,1]]
+Output: 3
+\`\`\``,
+    functionName: "maxAreaOfIsland",
+    relatedAlgorithmId: "bfs",
+    starterCode: `/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+function maxAreaOfIsland(grid) {
+  // your code here
+}`,
+    solutionCode: `function maxAreaOfIsland(grid) {
+  const rows = grid.length, cols = grid[0]?.length ?? 0;
+  const seen = Array.from({ length: rows }, () => new Array(cols).fill(false));
+
+  function area(r, c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return 0;
+    if (seen[r][c] || grid[r][c] === 0) return 0;
+    seen[r][c] = true;
+    return 1 + area(r + 1, c) + area(r - 1, c) + area(r, c + 1) + area(r, c - 1);
+  }
+
+  let best = 0;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === 1) best = Math.max(best, area(r, c));
+    }
+  }
+  return best;
+}`,
+    testCases: [
+      { args: [[[1, 1, 0], [0, 1, 0], [0, 0, 1]]], expected: 3 },
+      { args: [[[0, 0], [0, 0]]], expected: 0 },
+      { args: [[[1, 1, 1], [1, 1, 1]]], expected: 6 },
+    ],
+    languages: {
+      python: {
+        functionName: "max_area_of_island",
+        starterCode: `def max_area_of_island(grid: list[list[int]]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def max_area_of_island(grid: list[list[int]]) -> int:
+    rows = len(grid)
+    cols = len(grid[0]) if rows else 0
+    seen = [[False] * cols for _ in range(rows)]
+
+    def area(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols:
+            return 0
+        if seen[r][c] or grid[r][c] == 0:
+            return 0
+        seen[r][c] = True
+        return 1 + area(r + 1, c) + area(r - 1, c) + area(r, c + 1) + area(r, c - 1)
+
+    best = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:
+                best = max(best, area(r, c))
+    return best`,
+      },
+    },
+  },
 ];

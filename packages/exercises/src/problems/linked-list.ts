@@ -130,4 +130,162 @@ def merge_two_lists(list1, list2):
       },
     },
   },
+  {
+    id: "remove-nth-node-from-end",
+    title: "Remove Nth Node From End of List",
+    category: "linked-list",
+    difficulty: "medium",
+    prompt: `Given the head of a linked list, remove the \`n\`th node from the end and return the (possibly new) head. Do it in one pass.
+
+Send a \`fast\` pointer \`n\` nodes ahead first, then move both pointers together — when \`fast\` runs out, \`slow\` sits right before the node to remove.
+
+**Example**
+\`\`\`
+Input: head = [1, 2, 3, 4, 5], n = 2
+Output: [1, 2, 3, 5]
+\`\`\``,
+    functionName: "removeNthFromEnd",
+    argTransform: "list",
+    resultTransform: "list",
+    starterCode: `/**
+ * @param {ListNode} head  // { val, next }
+ * @param {number} n
+ * @return {ListNode}
+ */
+function removeNthFromEnd(head, n) {
+  // your code here
+}`,
+    solutionCode: `function removeNthFromEnd(head, n) {
+  const dummy = { val: 0, next: head };
+  let fast = dummy, slow = dummy;
+  for (let i = 0; i < n; i++) fast = fast.next;
+  while (fast.next) {
+    fast = fast.next;
+    slow = slow.next;
+  }
+  slow.next = slow.next.next;
+  return dummy.next;
+}`,
+    testCases: [
+      { args: [[1, 2, 3, 4, 5], 2], expected: [1, 2, 3, 5] },
+      { args: [[1], 1], expected: [] },
+      { args: [[1, 2], 1], expected: [1] },
+    ],
+    languages: {
+      python: {
+        functionName: "remove_nth_from_end",
+        starterCode: `# head is a node with .val and .next
+def remove_nth_from_end(head, n: int):
+    # your code here
+    pass`,
+        solutionCode: `def remove_nth_from_end(head, n: int):
+    dummy = ListNode(0)
+    dummy.next = head
+    fast = slow = dummy
+    for _ in range(n):
+        fast = fast.next
+    while fast.next:
+        fast = fast.next
+        slow = slow.next
+    slow.next = slow.next.next
+    return dummy.next`,
+      },
+    },
+  },
+  {
+    id: "reorder-list",
+    title: "Reorder List",
+    category: "linked-list",
+    difficulty: "medium",
+    prompt: `Given the head of a linked list \`L0 → L1 → ... → Ln\`, reorder it in place to \`L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → ...\` and return the new head.
+
+Find the middle with slow/fast pointers, reverse the second half, then merge the two halves node by node — three techniques you already have, chained together.
+
+**Example**
+\`\`\`
+Input: head = [1, 2, 3, 4]
+Output: [1, 4, 2, 3]
+\`\`\``,
+    functionName: "reorderList",
+    argTransform: "list",
+    resultTransform: "list",
+    starterCode: `/**
+ * @param {ListNode} head  // { val, next }
+ * @return {ListNode}
+ */
+function reorderList(head) {
+  // your code here
+}`,
+    solutionCode: `function reorderList(head) {
+  if (!head || !head.next) return head;
+
+  let slow = head, fast = head;
+  while (fast.next && fast.next.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  let second = slow.next;
+  slow.next = null;
+
+  let prev = null;
+  while (second) {
+    const next = second.next;
+    second.next = prev;
+    prev = second;
+    second = next;
+  }
+  second = prev;
+
+  let first = head;
+  while (second) {
+    const t1 = first.next, t2 = second.next;
+    first.next = second;
+    second.next = t1;
+    first = t1;
+    second = t2;
+  }
+  return head;
+}`,
+    testCases: [
+      { args: [[1, 2, 3, 4]], expected: [1, 4, 2, 3] },
+      { args: [[1, 2, 3, 4, 5]], expected: [1, 5, 2, 4, 3] },
+      { args: [[1, 2]], expected: [1, 2] },
+    ],
+    languages: {
+      python: {
+        functionName: "reorder_list",
+        starterCode: `# head is a node with .val and .next
+def reorder_list(head):
+    # your code here
+    pass`,
+        solutionCode: `def reorder_list(head):
+    if not head or not head.next:
+        return head
+
+    slow = fast = head
+    while fast.next and fast.next.next:
+        slow = slow.next
+        fast = fast.next.next
+    second = slow.next
+    slow.next = None
+
+    prev = None
+    while second:
+        nxt = second.next
+        second.next = prev
+        prev = second
+        second = nxt
+    second = prev
+
+    first = head
+    while second:
+        t1, t2 = first.next, second.next
+        first.next = second
+        second.next = t1
+        first = t1
+        second = t2
+    return head`,
+      },
+    },
+  },
 ];

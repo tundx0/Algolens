@@ -130,4 +130,59 @@ function searchRotated(nums, target) {
       },
     },
   },
+  {
+    id: "find-minimum-in-rotated-sorted-array",
+    title: "Find Minimum in Rotated Sorted Array",
+    category: "binary-search",
+    difficulty: "medium",
+    prompt: `A sorted array of distinct integers has been rotated at an unknown pivot (e.g. \`[0,1,2,4,5,6,7]\` becomes \`[4,5,6,7,0,1,2]\`). Given the rotated array \`nums\`, return its minimum element in O(log n).
+
+Compare the middle to the rightmost element: if \`nums[mid] > nums[right]\`, the minimum is somewhere to the right of mid; otherwise it's at mid or to its left — same rotated-array shape as [Search in Rotated Sorted Array](/practice/search-rotated-sorted-array), now hunting the pivot itself.
+
+**Example**
+\`\`\`
+Input: nums = [3, 4, 5, 1, 2]
+Output: 1
+\`\`\``,
+    functionName: "findMin",
+    relatedAlgorithmId: "binary-search",
+    starterCode: `/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+function findMin(nums) {
+  // your code here
+}`,
+    solutionCode: `function findMin(nums) {
+  let lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (nums[mid] > nums[hi]) lo = mid + 1;
+    else hi = mid;
+  }
+  return nums[lo];
+}`,
+    testCases: [
+      { args: [[3, 4, 5, 1, 2]], expected: 1 },
+      { args: [[4, 5, 6, 7, 0, 1, 2]], expected: 0 },
+      { args: [[11, 13, 15, 17]], expected: 11 },
+    ],
+    languages: {
+      python: {
+        functionName: "find_min",
+        starterCode: `def find_min(nums: list[int]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def find_min(nums: list[int]) -> int:
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] > nums[hi]:
+            lo = mid + 1
+        else:
+            hi = mid
+    return nums[lo]`,
+      },
+    },
+  },
 ];

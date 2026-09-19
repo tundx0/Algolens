@@ -167,4 +167,154 @@ function maxArea(height) {
       },
     },
   },
+  {
+    id: "three-sum",
+    title: "3Sum",
+    category: "two-pointers",
+    difficulty: "medium",
+    prompt: `Given an integer array \`nums\`, return all unique triplets \`[nums[i], nums[j], nums[k]]\` (i, j, k all different) that sum to \`0\`. Each triplet's numbers should be sorted ascending, and the triplets themselves may be returned in any order — no duplicate triplets.
+
+Sort first, fix one number, then two-point the rest — the same shape as [Two Sum II](/practice/two-sum-sorted), one level up.
+
+**Example**
+\`\`\`
+Input: nums = [-1, 0, 1, 2, -1, -4]
+Output: [[-1, -1, 2], [-1, 0, 1]]
+\`\`\``,
+    functionName: "threeSum",
+    starterCode: `/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+function threeSum(nums) {
+  // your code here
+}`,
+    solutionCode: `function threeSum(nums) {
+  const sorted = [...nums].sort((a, b) => a - b);
+  const result = [];
+  for (let i = 0; i < sorted.length - 2; i++) {
+    if (i > 0 && sorted[i] === sorted[i - 1]) continue;
+    let lo = i + 1, hi = sorted.length - 1;
+    while (lo < hi) {
+      const sum = sorted[i] + sorted[lo] + sorted[hi];
+      if (sum === 0) {
+        result.push([sorted[i], sorted[lo], sorted[hi]]);
+        lo++; hi--;
+        while (lo < hi && sorted[lo] === sorted[lo - 1]) lo++;
+        while (lo < hi && sorted[hi] === sorted[hi + 1]) hi--;
+      } else if (sum < 0) {
+        lo++;
+      } else {
+        hi--;
+      }
+    }
+  }
+  return result;
+}`,
+    testCases: [
+      {
+        args: [[-1, 0, 1, 2, -1, -4]],
+        expected: [[-1, -1, 2], [-1, 0, 1]],
+        unordered: true,
+      },
+      { args: [[0, 1, 1]], expected: [], unordered: true },
+      { args: [[0, 0, 0, 0]], expected: [[0, 0, 0]], unordered: true },
+    ],
+    languages: {
+      python: {
+        functionName: "three_sum",
+        starterCode: `def three_sum(nums: list[int]) -> list[list[int]]:
+    # your code here
+    pass`,
+        solutionCode: `def three_sum(nums: list[int]) -> list[list[int]]:
+    sorted_nums = sorted(nums)
+    result = []
+    n = len(sorted_nums)
+    for i in range(n - 2):
+        if i > 0 and sorted_nums[i] == sorted_nums[i - 1]:
+            continue
+        lo, hi = i + 1, n - 1
+        while lo < hi:
+            total = sorted_nums[i] + sorted_nums[lo] + sorted_nums[hi]
+            if total == 0:
+                result.append([sorted_nums[i], sorted_nums[lo], sorted_nums[hi]])
+                lo += 1
+                hi -= 1
+                while lo < hi and sorted_nums[lo] == sorted_nums[lo - 1]:
+                    lo += 1
+                while lo < hi and sorted_nums[hi] == sorted_nums[hi + 1]:
+                    hi -= 1
+            elif total < 0:
+                lo += 1
+            else:
+                hi -= 1
+    return result`,
+      },
+    },
+  },
+  {
+    id: "trapping-rain-water",
+    title: "Trapping Rain Water",
+    category: "two-pointers",
+    difficulty: "hard",
+    prompt: `Given \`height\`, an elevation map where \`height[i]\` is the height of a 1-unit-wide bar at position \`i\`, compute how much water it can trap after raining.
+
+Two pointers closing in from both ends, each tracking the tallest wall seen so far on its own side, beats the naive per-column max-left/max-right scan without extra arrays.
+
+**Example**
+\`\`\`
+Input: height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+Output: 6
+\`\`\``,
+    functionName: "trap",
+    starterCode: `/**
+ * @param {number[]} height
+ * @return {number}
+ */
+function trap(height) {
+  // your code here
+}`,
+    solutionCode: `function trap(height) {
+  let lo = 0, hi = height.length - 1;
+  let leftMax = 0, rightMax = 0, water = 0;
+  while (lo < hi) {
+    if (height[lo] < height[hi]) {
+      leftMax = Math.max(leftMax, height[lo]);
+      water += leftMax - height[lo];
+      lo++;
+    } else {
+      rightMax = Math.max(rightMax, height[hi]);
+      water += rightMax - height[hi];
+      hi--;
+    }
+  }
+  return water;
+}`,
+    testCases: [
+      { args: [[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]], expected: 6 },
+      { args: [[4, 2, 0, 3, 2, 5]], expected: 9 },
+      { args: [[]], expected: 0 },
+    ],
+    languages: {
+      python: {
+        functionName: "trap",
+        starterCode: `def trap(height: list[int]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def trap(height: list[int]) -> int:
+    lo, hi = 0, len(height) - 1
+    left_max = right_max = water = 0
+    while lo < hi:
+        if height[lo] < height[hi]:
+            left_max = max(left_max, height[lo])
+            water += left_max - height[lo]
+            lo += 1
+        else:
+            right_max = max(right_max, height[hi])
+            water += right_max - height[hi]
+            hi -= 1
+    return water`,
+      },
+    },
+  },
 ];

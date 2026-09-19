@@ -142,4 +142,54 @@ function countBits(n) {
       },
     },
   },
+  {
+    id: "reverse-bits",
+    title: "Reverse Bits",
+    category: "bit-manipulation",
+    difficulty: "medium",
+    prompt: `Given a 32-bit unsigned integer \`n\`, return the integer obtained by reversing the bits of its binary representation.
+
+Peel one bit off the low end of \`n\` and place it at the low end of a growing result, shifting the result left each time — after 32 rounds, the result holds \`n\`'s bits in reverse order.
+
+**Example**
+\`\`\`
+Input: n = 43261596        // 00000010100101000001111010011100
+Output: 964176192          // 00111001011110000010100101000000
+\`\`\``,
+    functionName: "reverseBits",
+    starterCode: `/**
+ * @param {number} n
+ * @return {number}
+ */
+function reverseBits(n) {
+  // your code here
+}`,
+    solutionCode: `function reverseBits(n) {
+  let result = 0;
+  for (let i = 0; i < 32; i++) {
+    result = (result << 1) | (n & 1);
+    n >>>= 1;
+  }
+  return result >>> 0;
+}`,
+    testCases: [
+      { args: [43261596], expected: 964176192 },
+      { args: [0], expected: 0 },
+      { args: [1], expected: 2147483648 },
+    ],
+    languages: {
+      python: {
+        functionName: "reverse_bits",
+        starterCode: `def reverse_bits(n: int) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def reverse_bits(n: int) -> int:
+    result = 0
+    for _ in range(32):
+        result = (result << 1) | (n & 1)
+        n >>= 1
+    return result`,
+      },
+    },
+  },
 ];

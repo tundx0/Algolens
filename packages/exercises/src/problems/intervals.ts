@@ -138,4 +138,66 @@ function insertInterval(intervals, newInterval) {
       },
     },
   },
+  {
+    id: "non-overlapping-intervals",
+    title: "Non-overlapping Intervals",
+    category: "intervals",
+    difficulty: "medium",
+    prompt: `Given an array of intervals \`[start, end]\`, return the minimum number of intervals you'd need to remove so that none of the remaining ones overlap.
+
+Sort by end time and greedily keep whichever interval finishes earliest — it leaves the most room for everything after it, so anything that overlaps the one you kept must be removed instead.
+
+**Example**
+\`\`\`
+Input: intervals = [[1, 2], [2, 3], [3, 4], [1, 3]]
+Output: 1        // remove [1, 3]
+\`\`\``,
+    functionName: "eraseOverlapIntervals",
+    starterCode: `/**
+ * @param {number[][]} intervals
+ * @return {number}
+ */
+function eraseOverlapIntervals(intervals) {
+  // your code here
+}`,
+    solutionCode: `function eraseOverlapIntervals(intervals) {
+  if (intervals.length === 0) return 0;
+  const sorted = [...intervals].sort((a, b) => a[1] - b[1]);
+  let count = 0;
+  let end = sorted[0][1];
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i][0] < end) {
+      count++;
+    } else {
+      end = sorted[i][1];
+    }
+  }
+  return count;
+}`,
+    testCases: [
+      { args: [[[1, 2], [2, 3], [3, 4], [1, 3]]], expected: 1 },
+      { args: [[[1, 2], [1, 2], [1, 2]]], expected: 2 },
+      { args: [[[1, 2], [2, 3]]], expected: 0 },
+    ],
+    languages: {
+      python: {
+        functionName: "erase_overlap_intervals",
+        starterCode: `def erase_overlap_intervals(intervals: list[list[int]]) -> int:
+    # your code here
+    pass`,
+        solutionCode: `def erase_overlap_intervals(intervals: list[list[int]]) -> int:
+    if not intervals:
+        return 0
+    ordered = sorted(intervals, key=lambda iv: iv[1])
+    count = 0
+    end = ordered[0][1]
+    for start, finish in ordered[1:]:
+        if start < end:
+            count += 1
+        else:
+            end = finish
+    return count`,
+      },
+    },
+  },
 ];
