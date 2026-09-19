@@ -9,6 +9,12 @@ export type PathwayStepKind = "reading" | "visualize" | "practice" | "project";
 export interface ProjectBrief {
   /** the assignment, markdown */
   brief: string;
+  /**
+   * Shu-stage only: the shape of a solution and what to go look up — not
+   * code to copy. Ha/Ri projects omit this; forcing that ambiguity is the
+   * point of those stages. Markdown.
+   */
+  scaffold?: string;
   /** what "done" means — shown as a checklist */
   acceptanceCriteria: string[];
   estimatedHours: number;

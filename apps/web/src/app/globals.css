@@ -59,6 +59,25 @@
   color-scheme: light;
 }
 
+/* Fixed night illustrations (samurai hero) need dark-mode ink/accent
+   contrast no matter what the global light/dark toggle is set to. */
+.night-scene {
+  --bg: #0b1029;
+  --bg-well: #070a1c;
+  --surface: #111737;
+  --surface-2: #171f47;
+  --edge: #202a58;
+  --edge-strong: #33407a;
+  --ink: #edf0fa;
+  --ink-2: #a6afd0;
+  --ink-3: #6b76a3;
+  --accent: #faf92a;
+  --accent-hover: #fcfa64;
+  --accent-ink: #0b1029;
+  --accent-text: #faf92a;
+  color-scheme: dark;
+}
+
 body {
   background: var(--bg);
   color: var(--ink);

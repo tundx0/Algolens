@@ -100,6 +100,16 @@ export function StepCard({
                 <div className="prose-invert text-[13.5px] leading-relaxed text-ink-2">
                   <ReactMarkdown>{step.project.brief}</ReactMarkdown>
                 </div>
+                {step.project.scaffold && (
+                  <div className="rounded-md border border-edge-strong/60 bg-surface-2 p-4">
+                    <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-3">
+                      Where to start
+                    </div>
+                    <div className="prose-invert text-[13px] leading-relaxed text-ink-2">
+                      <ReactMarkdown>{step.project.scaffold}</ReactMarkdown>
+                    </div>
+                  </div>
+                )}
                 <div>
                   <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-3">
                     Acceptance criteria
