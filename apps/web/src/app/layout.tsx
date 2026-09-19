@@ -5,6 +5,7 @@ import {
   JetBrains_Mono,
 } from "next/font/google";
 import type { ReactNode } from "react";
+import { ClerkThemeProvider } from "@/components/ClerkThemeProvider";
 import { TrpcProvider } from "@/components/TrpcProvider";
 import "./globals.css";
 
@@ -25,15 +26,17 @@ const themeInit = `(function(){try{if(localStorage.getItem("algolens-theme")==="
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
-      suppressHydrationWarning
-    >
-      <body>
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
-        <TrpcProvider>{children}</TrpcProvider>
-      </body>
-    </html>
+    <ClerkThemeProvider>
+      <html
+        lang="en"
+        className={`${display.variable} ${sans.variable} ${mono.variable}`}
+        suppressHydrationWarning
+      >
+        <body>
+          <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+          <TrpcProvider>{children}</TrpcProvider>
+        </body>
+      </html>
+    </ClerkThemeProvider>
   );
 }

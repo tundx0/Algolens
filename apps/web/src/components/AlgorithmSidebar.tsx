@@ -1,6 +1,7 @@
 "use client";
 
 import { algorithmsByCategory } from "@algolens/algorithms";
+import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -31,6 +32,7 @@ export function AlgorithmSidebar({
   progress?: Record<string, "VIEWED" | "COMPLETED">;
 }) {
   const grouped = algorithmsByCategory();
+  const { isSignedIn, isLoaded } = useUser();
 
   return (
     <aside className="flex h-dvh flex-col gap-7 border-r border-edge bg-surface/50 px-5 py-7">
@@ -82,7 +84,19 @@ export function AlgorithmSidebar({
           >
             Learning path →
           </Link>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            {isLoaded &&
+              (isSignedIn ? (
+                <UserButton />
+              ) : (
+                <SignInButton mode="modal">
+                  <button className="text-[11px] font-semibold text-ink-3 hover:text-ink">
+                    Sign in
+                  </button>
+                </SignInButton>
+              ))}
+          </div>
         </div>
         <Link
           href="/practice"

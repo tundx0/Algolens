@@ -14,6 +14,7 @@
     "@algolens/pathways": "workspace:*",
     "@algolens/ui": "workspace:*",
     "@algolens/viz-engine": "workspace:*",
+    "@clerk/nextjs": "^7.9.4",
     "@monaco-editor/react": "^4.7.0",
     "@prisma/client": "^6.19.3",
     "@tanstack/react-query": "^5.101.4",

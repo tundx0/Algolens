@@ -1,5 +1,6 @@
 "use client";
 
+import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
@@ -22,6 +23,7 @@ export function SiteNav({
   containerClassName?: string;
 }) {
   const pathname = usePathname();
+  const { isSignedIn, isLoaded } = useUser();
 
   return (
     <nav className={`mx-auto flex items-center justify-between px-6 py-6 sm:px-8 ${containerClassName}`}>
@@ -45,8 +47,18 @@ export function SiteNav({
             </Link>
           );
         })}
-        <span className="ml-2">
+        <span className="ml-2 flex items-center gap-2">
           <ThemeToggle />
+          {isLoaded &&
+            (isSignedIn ? (
+              <UserButton />
+            ) : (
+              <SignInButton mode="modal">
+                <button className="text-[13px] font-semibold text-ink-2 transition-colors duration-[120ms] hover:text-ink">
+                  Sign in
+                </button>
+              </SignInButton>
+            ))}
         </span>
       </div>
     </nav>
