@@ -5,6 +5,10 @@ implemented as pure step-generators; a generic visualization engine plays the
 steps back with a consistent motion grammar, so learners can infer what an
 algorithm does from motion alone.
 
+## Preview
+
+![AlgoLens algorithm visualization](docs/algolens-preview.png)
+
 ## Development
 
 ```sh
